@@ -10,7 +10,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
+// CreateCategory godoc
+// @ID create_category
+// @Router /category [POST]
+// @Summary Create Category
+// @Description Create Category
+// @Tags Category
+// @Accept json
+// @Produce json
+// @Param category body models.CreateCategory true "CreateCategoryRequestBody"
+// @Success 201 {object} models.Category "GetCategoryBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) CreateCategory(c *gin.Context) {
 
 	var book models.CreateCategory
@@ -38,7 +49,18 @@ func (h *Handler) CreateCategory(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, res)
 }
-
+// GetByIDCategory godoc
+// @ID get_by_id_category
+// @Router /category/{id} [GET]
+// @Summary Get By ID Category
+// @Description Get By ID Category
+// @Tags Category
+// @Accept json
+// @Produce json
+// @Param id path string true "id"
+// @Success 200 {object} models.Category "GetCategoryBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) GetByIdCategory(c *gin.Context) {
 
 	id := c.Param("id")
@@ -52,7 +74,19 @@ func (h *Handler) GetByIdCategory(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, res)
 }
-
+// GetListCategory godoc
+// @ID get_list_category
+// @Router /category [GET]
+// @Summary Get List Category
+// @Description Get List Category
+// @Tags Category
+// @Accept json
+// @Produce json
+// @Param offset query int false "offset"
+// @Param limit query int false "limit"
+// @Success 200 {object} models.GetListCategoryResponse "GetCategoryListBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) GetListCategory(c *gin.Context) {
 	var (
 		err       error
@@ -93,7 +127,19 @@ func (h *Handler) GetListCategory(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, res)
 }
-
+// UpdateCategory godoc
+// @ID update_category
+// @Router /category/{id} [PUT]
+// @Summary Update Category
+// @Description Update Category
+// @Tags Category
+// @Accept json
+// @Produce json
+// @Param id path string true "id"
+// @Param category body models.UpdateCategorySwag true "UpdateCategoryRequestBody"
+// @Success 202 {object} models.Category "UpdateCategoryBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) UpdateCategory(c *gin.Context){
 	var category models.UpdateCategory
 
@@ -116,6 +162,18 @@ func (h *Handler) UpdateCategory(c *gin.Context){
 	c.JSON(http.StatusCreated, "updete  Category")
 }
 
+// DeleteCategory godoc
+// @ID delete_category
+// @Router /category/{id} [DELETE]
+// @Summary Delete Category
+// @Description Delete Category
+// @Tags Category
+// @Accept json
+// @Produce json
+// @Param id path string true "id"
+// @Success 204 {object} models.Empty "DeleteCategoryBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) DeleteCategory(c *gin.Context){
 	id := c.Param("id")
 

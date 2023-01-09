@@ -33,26 +33,52 @@ func InsertCategory(db *sql.DB, Category models.CreateCategory) (string, error) 
 	return id, nil
 }
 
-func GetByIdCategory(db *sql.DB, req models.CategoryPrimeryKey) (models.Category, error) {
+func GetByIdCategory(db *sql.DB, req models.CategoryPrimeryKey) (models.Category1, error) {
 
 	var (
-		Category models.Category
+		Category models.Category1
 	)
-
-	query := `
-		SELECT
-			id,
-			name
-		FROM Categorys WHERE id = $1
+	query :=`select
+	c.id,
+	c.name
+	from BookCategory as cb
+	join categorys as c on c.id = cb.categoryId
+	where cb.categoryId = $1`
+	query1 := `
+	select
+	b.id,
+	b.name,
+	b.price,
+	b.Description
+	from BookCategory as cb
+	join books as b on b.id = cb.bookId
+	where cb.categoryId = $1
+	group by b.name,b.id;
 	`
+rows, err := db.Query(query,req.Id)
+if err != nil {
+	return models.Category1{}, err
+}
 
-	err := db.QueryRow(query, req.Id).Scan(
-		&Category.Id,
-		&Category.Name,
-	)
-
+for rows.Next() {
+err =  rows.Scan(
+	&Category.Id,
+	&Category.Name,	
+)
+rows, err = db.Query(query1,req.Id)
+for rows.Next() {
+	var book models.BookInfo
+	err =  rows.Scan(
+		&book.Id,
+		&book.Name,
+		&book.Price,
+		&book.Description,
+		)
+Category.BookInfos = append(Category.BookInfos,book)		
+}
+}
 	if err != nil {
-		return models.Category{}, err
+		return models.Category1{}, err
 	}
 
 	return Category, nil

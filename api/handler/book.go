@@ -10,7 +10,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
+// CreateBook godoc
+// @ID create_Book
+// @Router /book [POST]
+// @Summary Create Book
+// @Description Create Book
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Param Book body models.CreateBook true "CreateBookRequestBody"
+// @Success 201 {object} models.CreateBook "GetBookryBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) CreateBook(c *gin.Context) {
 
 	var book models.CreateBook
@@ -38,7 +49,18 @@ func (h *Handler) CreateBook(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, res)
 }
-
+// GetByIDBook godoc
+// @ID Get_By_IDBook
+// @Router /book/{id} [GET]
+// @Summary GetByID Book
+// @Description GetByID Book
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Param id path string true "id"
+// @Success 201 {object} models.BookPrimeryKey "GetByIDBookBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) GetByIDBook(c *gin.Context) {
 
 	id := c.Param("id")
@@ -52,7 +74,19 @@ func (h *Handler) GetByIDBook(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, res)
 }
-
+// GetListBook godoc
+// @ID Get_List_Book
+// @Router /book [GET]
+// @Summary Get List Book
+// @Description Get List Book
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Param offset query int false "offset"
+// @Param limit query int false "limit"
+// @Success 200 {object} models.GetListBookRequest "GetListBookBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) GetListBook(c *gin.Context) {
 	var (
 		err       error
@@ -94,6 +128,19 @@ func (h *Handler) GetListBook(c *gin.Context) {
 	c.JSON(http.StatusCreated, res)
 }
 
+// UpdateBook godoc
+// @ID Update_Book
+// @Router /book/{id} [PUT]
+// @Summary Update_Book
+// @Description Update_Book
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Param id path string true "id"
+// @Param book body models.PutBook true "UpdateBookResquestBody"
+// @Success 202 {object} models.PutBook "UpdateBookBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) UpdateBook(c *gin.Context){
 	var book models.UpdateBook
 
@@ -115,7 +162,18 @@ func (h *Handler) UpdateBook(c *gin.Context){
 
 	c.JSON(http.StatusCreated, "updete  book")
 }
-
+// DeleteBook godoc
+// @Id Delete_Book
+// @Router /book/{id}  [DELETE]
+// @Summary Delete Book
+// @Description Delete Book
+// @Tags Book
+// @Accept json
+// @Produce json
+// @Param id path string true "id"
+// @Success 204 {object} models.Empty "DeleteBookyBody"
+// @Response 400 {object} string "Invalid Argumant"
+// @Failure 500 {object} string "Server error"
 func (h *Handler) DeleteBook(c *gin.Context){
 	id := c.Param("id")
 

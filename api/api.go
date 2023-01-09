@@ -3,7 +3,10 @@ package api
 import (
 	"database/sql"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"add/api/handler"
+	_"add/api/docs"
 )
 
 func NewApi(r *gin.Engine, db *sql.DB) {
@@ -22,6 +25,8 @@ func NewApi(r *gin.Engine, db *sql.DB) {
 	r.PUT("/category/:id",handlerV1.UpdateCategory)
 	r.DELETE("/category/:id",handlerV1.DeleteCategory)
 
+
+r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 }
 
