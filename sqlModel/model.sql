@@ -24,48 +24,39 @@ VALUES
 ('729f2dac-8ea5-11ed-a1eb-0242ac120002','9da542d0-a54e-44f6-900f-5250e866b747','f9fd675a-4c11-4ea6-8872-f33efee2e122'),
 ('7c72e5a8-8ea5-11ed-a1eb-0242ac120002','8f85e52d-ebb1-44ea-ae20-331034280a23','be936be5-609d-4370-80b0-fb1b106857b0'),
 ('84ff6390-8ea5-11ed-a1eb-0242ac120002','8f85e52d-ebb1-44ea-ae20-331034280a23','e04e7ac0-db2d-4371-ab33-cc5776d896d0');
-
 select
-b.name as name,
-b.price as price,
-b.description as description,
-array_agg(c.name) 
-from BookCategory as bc
-join books as b on b.id = bc.bookId
-join categorys as c on c.id = bc.categoryId
-where b.id = '9da542d0-a54e-44f6-900f-5250e866b747'
-group by b.name,b.price, b.description;
-
-select
-count(*) OVER(),
+	b.id,
 	b.name,
 	b.price,
-	b.description,
-	arrey_agg(c.name)
-	from books as b
-	join BookCategory as bc on bc.bookId = b.id
-	join categorys as c on c.id = bc.categoryId
-	where b.id = '9da542d0-a54e-44f6-900f-5250e866b747'
-	group by b.name,b.price, b.description,c.name;
+	b.Description,
+	b.updated_at,
+	b.created_at
+	from BookCategory as cb
+	join books as b on b.id = cb.bookId
+	where b.id = $1
+	group by b.name,b.id;
 
 select
-array_agg(c.name)
-from categorys as c
- join BookCategory as bc on bc.categoryId = c.id 
- join books as b on b.id = bc.bookId
- where b.id = '9da542d0-a54e-44f6-900f-5250e866b747'
- group by c.name;  
-
-select
-array_agg(c.name)
+    c.id,
+    c.name
 from BookCategory as cb
 join categorys as c on c.id = cb.categoryId
-where cb.bookId = '9da542d0-a54e-44f6-900f-5250e866b747';
-group by c.name;
+where cb.bookId = $1;
+
 
 select
-b.name
+	c.id,
+	c.name
+from BookCategory as cb
+join categorys as c on c.id = cb.categoryId
+where cb.categoryId = $1;
+
+ select
+	b.id,
+	b.name,
+	b.price,
+	b.Description
 from BookCategory as cb
 join books as b on b.id = cb.bookId
-where b.id = '9da542d0-a54e-44f6-900f-5250e866b747'
-group by b.name;
+where cb.categoryId = $1
+group by b.name,b.id

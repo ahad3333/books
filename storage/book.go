@@ -55,7 +55,7 @@ func GetByIdBook(db *sql.DB, req models.BookPrimeryKey) (models.Book1, error) {
 	from BookCategory as cb
 	join books as b on b.id = cb.bookId
 	where b.id = $1
-	group by b.name,b.id;
+	group by b.name,b.id
 	`
 query1 :=`select
 c.id,
