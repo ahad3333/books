@@ -29,7 +29,7 @@ const docTemplate = `{
                     "Book"
                 ],
                 "summary": "Get List Book",
-                "operationId": "Get_List_Book",
+                "operationId": "BookPrimeryKey",
                 "parameters": [
                     {
                         "type": "integer",
@@ -46,9 +46,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "GetListBookBody",
+                        "description": "GetBookListBody",
                         "schema": {
-                            "$ref": "#/definitions/models.GetListBookRequest"
+                            "$ref": "#/definitions/models.GetListBookResponse"
                         }
                     },
                     "400": {
@@ -66,7 +66,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Create Book",
+                "description": "CreateBook",
                 "consumes": [
                     "application/json"
                 ],
@@ -76,24 +76,24 @@ const docTemplate = `{
                 "tags": [
                     "Book"
                 ],
-                "summary": "Create Book",
-                "operationId": "create_Book",
+                "summary": "CreateBook",
+                "operationId": "CreateBook",
                 "parameters": [
                     {
                         "description": "CreateBookRequestBody",
-                        "name": "Book",
+                        "name": "book",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.PutBook"
+                            "$ref": "#/definitions/models.CreateBook"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "GetBookryBody",
+                        "description": "GetBookBody",
                         "schema": {
-                            "$ref": "#/definitions/models.CreateBook"
+                            "$ref": "#/definitions/models.Book"
                         }
                     },
                     "400": {
@@ -138,7 +138,7 @@ const docTemplate = `{
                     "201": {
                         "description": "GetByIDBookBody",
                         "schema": {
-                            "$ref": "#/definitions/models.BookPrimeryKey"
+                            "$ref": "#/definitions/models.Book"
                         }
                     },
                     "400": {
@@ -156,7 +156,7 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "Update_Book",
+                "description": "Update Book",
                 "consumes": [
                     "application/json"
                 ],
@@ -166,8 +166,8 @@ const docTemplate = `{
                 "tags": [
                     "Book"
                 ],
-                "summary": "Update_Book",
-                "operationId": "Update_Book",
+                "summary": "Update Book",
+                "operationId": "UpdateBook",
                 "parameters": [
                     {
                         "type": "string",
@@ -177,12 +177,12 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "UpdateBookResquestBody",
+                        "description": "UpdateBookRequestBody",
                         "name": "book",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.PutBook"
+                            "$ref": "#/definitions/models.UpdateBookSwag"
                         }
                     }
                 ],
@@ -190,7 +190,7 @@ const docTemplate = `{
                     "202": {
                         "description": "UpdateBookBody",
                         "schema": {
-                            "$ref": "#/definitions/models.PutBook"
+                            "$ref": "#/definitions/models.Book"
                         }
                     },
                     "400": {
@@ -219,7 +219,7 @@ const docTemplate = `{
                     "Book"
                 ],
                 "summary": "Delete Book",
-                "operationId": "Delete_Book",
+                "operationId": "DeleteBook",
                 "parameters": [
                     {
                         "type": "string",
@@ -231,7 +231,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "204": {
-                        "description": "DeleteBookyBody",
+                        "description": "DeleteBookBody",
                         "schema": {
                             "$ref": "#/definitions/models.Empty"
                         }
@@ -488,32 +488,22 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.BookPrimeryKey": {
+        "models.Book": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.Category": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Category1"
+                    }
                 },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.CreateBook": {
-            "type": "object",
-            "properties": {
                 "created_at": {
                     "type": "string"
                 },
                 "description": {
+                    "type": "string"
+                },
+                "id": {
                     "type": "string"
                 },
                 "name": {
@@ -527,9 +517,98 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Category": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.CategoryBook"
+                    }
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Category1": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CategoryBook": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateBook": {
+            "type": "object",
+            "properties": {
+                "category_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        },
         "models.CreateCategory": {
             "type": "object",
             "properties": {
+                "books_id": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "name": {
                     "type": "string"
                 }
@@ -538,13 +617,16 @@ const docTemplate = `{
         "models.Empty": {
             "type": "object"
         },
-        "models.GetListBookRequest": {
+        "models.GetListBookResponse": {
             "type": "object",
             "properties": {
-                "limit": {
-                    "type": "integer"
+                "books": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Book"
+                    }
                 },
-                "offset": {
+                "count": {
                     "type": "integer"
                 }
             }
@@ -552,7 +634,7 @@ const docTemplate = `{
         "models.GetListCategoryResponse": {
             "type": "object",
             "properties": {
-                "Categorys": {
+                "categories": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/models.Category"
@@ -563,7 +645,7 @@ const docTemplate = `{
                 }
             }
         },
-        "models.PutBook": {
+        "models.UpdateBookSwag": {
             "type": "object",
             "properties": {
                 "description": {

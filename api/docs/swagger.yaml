@@ -1,21 +1,15 @@
 definitions:
-  models.BookPrimeryKey:
+  models.Book:
     properties:
-      id:
-        type: string
-    type: object
-  models.Category:
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-    type: object
-  models.CreateBook:
-    properties:
+      categories:
+        items:
+          $ref: '#/definitions/models.Category1'
+        type: array
       created_at:
         type: string
       description:
+        type: string
+      id:
         type: string
       name:
         type: string
@@ -24,30 +18,90 @@ definitions:
       updated_at:
         type: string
     type: object
+  models.Category:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/models.CategoryBook'
+        type: array
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.Category1:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.CategoryBook:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      updated_at:
+        type: string
+    type: object
+  models.CreateBook:
+    properties:
+      category_ids:
+        items:
+          type: string
+        type: array
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
   models.CreateCategory:
     properties:
+      books_id:
+        items:
+          type: string
+        type: array
       name:
         type: string
     type: object
   models.Empty:
     type: object
-  models.GetListBookRequest:
+  models.GetListBookResponse:
     properties:
-      limit:
-        type: integer
-      offset:
+      books:
+        items:
+          $ref: '#/definitions/models.Book'
+        type: array
+      count:
         type: integer
     type: object
   models.GetListCategoryResponse:
     properties:
-      Categorys:
+      categories:
         items:
           $ref: '#/definitions/models.Category'
         type: array
       count:
         type: integer
     type: object
-  models.PutBook:
+  models.UpdateBookSwag:
     properties:
       description:
         type: string
@@ -69,7 +123,7 @@ paths:
       consumes:
       - application/json
       description: Get List Book
-      operationId: Get_List_Book
+      operationId: BookPrimeryKey
       parameters:
       - description: offset
         in: query
@@ -83,9 +137,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: GetListBookBody
+          description: GetBookListBody
           schema:
-            $ref: '#/definitions/models.GetListBookRequest'
+            $ref: '#/definitions/models.GetListBookResponse'
         "400":
           description: Invalid Argumant
           schema:
@@ -100,22 +154,22 @@ paths:
     post:
       consumes:
       - application/json
-      description: Create Book
-      operationId: create_Book
+      description: CreateBook
+      operationId: CreateBook
       parameters:
       - description: CreateBookRequestBody
         in: body
-        name: Book
+        name: book
         required: true
         schema:
-          $ref: '#/definitions/models.PutBook'
+          $ref: '#/definitions/models.CreateBook'
       produces:
       - application/json
       responses:
         "201":
-          description: GetBookryBody
+          description: GetBookBody
           schema:
-            $ref: '#/definitions/models.CreateBook'
+            $ref: '#/definitions/models.Book'
         "400":
           description: Invalid Argumant
           schema:
@@ -124,7 +178,7 @@ paths:
           description: Server error
           schema:
             type: string
-      summary: Create Book
+      summary: CreateBook
       tags:
       - Book
   /book/{id}:
@@ -132,7 +186,7 @@ paths:
       consumes:
       - application/json
       description: Delete Book
-      operationId: Delete_Book
+      operationId: DeleteBook
       parameters:
       - description: id
         in: path
@@ -143,7 +197,7 @@ paths:
       - application/json
       responses:
         "204":
-          description: DeleteBookyBody
+          description: DeleteBookBody
           schema:
             $ref: '#/definitions/models.Empty'
         "400":
@@ -174,7 +228,7 @@ paths:
         "201":
           description: GetByIDBookBody
           schema:
-            $ref: '#/definitions/models.BookPrimeryKey'
+            $ref: '#/definitions/models.Book'
         "400":
           description: Invalid Argumant
           schema:
@@ -189,27 +243,27 @@ paths:
     put:
       consumes:
       - application/json
-      description: Update_Book
-      operationId: Update_Book
+      description: Update Book
+      operationId: UpdateBook
       parameters:
       - description: id
         in: path
         name: id
         required: true
         type: string
-      - description: UpdateBookResquestBody
+      - description: UpdateBookRequestBody
         in: body
         name: book
         required: true
         schema:
-          $ref: '#/definitions/models.PutBook'
+          $ref: '#/definitions/models.UpdateBookSwag'
       produces:
       - application/json
       responses:
         "202":
           description: UpdateBookBody
           schema:
-            $ref: '#/definitions/models.PutBook'
+            $ref: '#/definitions/models.Book'
         "400":
           description: Invalid Argumant
           schema:
@@ -218,7 +272,7 @@ paths:
           description: Server error
           schema:
             type: string
-      summary: Update_Book
+      summary: Update Book
       tags:
       - Book
   /category:

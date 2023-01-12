@@ -1,16 +1,15 @@
 package handler
 
 import (
-	"database/sql"
+	"add/storage"
 )
 
-
-type Handler struct{
-	db *sql.DB 
+type Handler struct {
+	storage storage.StorageI
 }
 
-func NewHandler(db *sql.DB) *Handler   {
+func NewHandler(storage storage.StorageI) *Handler {
 	return &Handler{
-		db: db,
+		storage: storage,
 	}
 }

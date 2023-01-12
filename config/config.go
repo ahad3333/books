@@ -8,6 +8,7 @@ type Config struct {
 	PostgresDatabase string
 	PostgresPassword string
 	PostgresPort     string
+	PostgresMaxConn  int32
 }
 
 func Load() Config {
@@ -21,6 +22,7 @@ func Load() Config {
 	cfg.PostgresDatabase = "catalog"
 	cfg.PostgresPassword = "0003"
 	cfg.PostgresPort = "3003"
+	cfg.PostgresMaxConn = 30
 
 	return cfg
 }

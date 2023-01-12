@@ -5,29 +5,31 @@ type CategoryPrimeryKey struct {
 }
 
 type CreateCategory struct {
-	Name        string  `json:"name"`
+	Name string `json:"name"`
+	Books_id []string `json:"books_id"`
 }
-
 type Category struct {
-	Id          string  `json:"id"`
-	Name        string  `json:"name"`
-	CreatedAt   string  `json:"created_at"`
-	UpdatedAt   string  `json:"updated_at"`
+	Id        string `json:"id"`
+	Name      string `json:"name"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+	Books  []*CategoryBook `json:"categories"`
+
 }
 type Category1 struct {
-	Id          string  `json:"id"`
-	Name        string  `json:"name"`
-	BookInfos  []BookInfo
+	Id        string `json:"id"`
+	Name      string `json:"name"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
-type BookInfo struct {
-	Id          string  `json:"id"`
-	Name        string  `json:"name"`
-	Price       float64 `json:"price"`
-	Description string  `json:"description"`
-}
+
 type UpdateCategory struct {
-	Id          string  `json:"id"`
-	Name        string  `json:"name"`
+	Id   string `json:"id"`
+	Name string `json:"name"`
+}
+
+type UpdateCategorySwag struct {
+	Name string `json:"name"`
 }
 
 type GetListCategoryRequest struct {
@@ -36,9 +38,6 @@ type GetListCategoryRequest struct {
 }
 
 type GetListCategoryResponse struct {
-	Count int64  `json:"count"`
-	Categorys []Category `json:"Categorys"`
-}
-type UpdateCategorySwag struct{
-	Name        string  `json:"name"`
+	Count      int64       `json:"count"`
+	Categories []*UpdateCategory `json:"categories"`
 }

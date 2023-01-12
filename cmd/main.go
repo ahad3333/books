@@ -1,27 +1,32 @@
 package main
 
 import (
-	"add/pkg/db"
-	"log"
-	"github.com/gin-gonic/gin"
-	"add/config"
 	"add/api"
+	"context"
+	"add/config"
+	"add/storage/postgres"
+	"github.com/gin-gonic/gin"
+	"log"
 )
 
-func main()  {
-	cfg := config.Load() 
-	db,err:= db.NewConnectPostgres(cfg)
-	if err!=nil {
-		log.Fatal("Fatal:", err.Error() )
-		
+func main() {
+
+	cfg := config.Load()
+
+	storage, err := postgres.NewPostgres(context.Background(), cfg)
+	if err != nil {
+		log.Fatal("failed to connect database:", err)
 	}
+	defer storage.CloseDB()
 
-	r:= gin.New()
+	r := gin.New()
 
-	r.Use(gin.Logger(),gin.Recovery())
-	api.NewApi(r, db )
+	r.Use(gin.Logger(), gin.Recovery())
+
+	api.NewApi(r, storage)
+
 	err = r.Run(cfg.HTTPPort)
-	if err!= nil {
+	if err != nil {
 		panic(err)
 	}
 }

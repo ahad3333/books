@@ -1,43 +1,31 @@
 package models
 
-
 type BookPrimeryKey struct {
 	Id string `json:"id"`
 }
 
 type CreateBook struct {
-	Name        string  `json:"name"`
-	Price       float64 `json:"price"`
-	Description string  `json:"description"`
-	CreatedAt   string  `json:"created_at"`
-	UpdatedAt   string  `json:"updated_at"`
+	Name        string   `json:"name"`
+	Price       float64  `json:"price"`
+	Description string   `json:"description"`
+	CategoryIds []string `json:"category_ids"`
 }
-type PutBook struct{
-	Name        string  `json:"name"`
-	Price       float64 `json:"price"`
-	Description string  `json:"description"`
+type CategoryBook struct {
+	Id          string      `json:"id"`
+	Name        string      `json:"name"`
+	Price       float64     `json:"price"`
+	Description string      `json:"description"`
+	CreatedAt   string      `json:"created_at"`
+	UpdatedAt   string      `json:"updated_at"`
 }
-
 type Book struct {
-	Id          string  `json:"id"`
-	Name        string  `json:"name"`
-	Price       float64 `json:"price"`
-	Description string  `json:"description"`
-	CreatedAt   string  `json:"created_at"`
-	UpdatedAt   string  `json:"updated_at"`
-}
-type Book1 struct {
-	Id          string  `json:"id"`
-	Name        string  `json:"name"`
-	Price       float64 `json:"price"`
-	Description string  `json:"description"`
-	Categorys	[]CategoryName
-	CreatedAt   string  `json:"created_at"`
-	UpdatedAt   string  `json:"updated_at"`
-}
-type CategoryName struct {
-	Id          string  `json:"id"`
-	Name        string  `json:"Category"`
+	Id          string      `json:"id"`
+	Name        string      `json:"name"`
+	Price       float64     `json:"price"`
+	Description string      `json:"description"`
+	CreatedAt   string      `json:"created_at"`
+	UpdatedAt   string      `json:"updated_at"`
+	Categories  []*Category1 `json:"categories"`
 }
 
 type UpdateBook struct {
@@ -46,7 +34,8 @@ type UpdateBook struct {
 	Price       float64 `json:"price"`
 	Description string  `json:"description"`
 }
-type UpdateBookSwag struct{
+
+type UpdateBookSwag struct {
 	Name        string  `json:"name"`
 	Price       float64 `json:"price"`
 	Description string  `json:"description"`
@@ -58,8 +47,8 @@ type GetListBookRequest struct {
 }
 
 type GetListBookResponse struct {
-	Count int64  `json:"count"`
-	Books []Book `json:"books"`
+	Count int64   `json:"count"`
+	Books []*UpdateBook `json:"books"`
 }
-type Empty struct{}
 
+type Empty struct{}
