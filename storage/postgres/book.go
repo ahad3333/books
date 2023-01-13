@@ -191,7 +191,9 @@ func (r *bookRepo)GetList(ctx context.Context, req *models.GetListBookRequest) (
 			id,
 			name,
 			price,
-			description
+			description,
+			created_at,
+			updated_at  
 		FROM books
 	`
 
@@ -208,23 +210,39 @@ func (r *bookRepo)GetList(ctx context.Context, req *models.GetListBookRequest) (
 	if err != nil {
 		return &models.GetListBookResponse{}, err
 	}
+	var (
+		id          sql.NullString
+		name        sql.NullString
+		price       sql.NullFloat64
+		description sql.NullString
+		createdAt   sql.NullString
+		updatedAt   sql.NullString
+	)
 
 	for rows.Next() {
-		var book models.UpdateBook
+
 
 		err = rows.Scan(
 			&resp.Count,
-			&book.Id,
-			&book.Name,
-			&book.Price,
-			&book.Description,
-			// &book.CreatedAt,
-			// &book.UpdatedAt,
+			&id,
+			&name,
+			&price,
+			&description,
+			&createdAt,
+			&updatedAt,
 		)
-
+		book := models.CategoryBook{
+			Id:          id.String,
+			Name:        name.String,
+			Price:       price.Float64,
+			Description: description.String,
+			CreatedAt:   createdAt.String,
+			UpdatedAt:   updatedAt.String,
+		}
 		if err != nil {
 			return &models.GetListBookResponse{}, err
 		}
+		
 		resp.Books = append(resp.Books, &book)
 
 

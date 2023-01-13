@@ -39,5 +39,5 @@ type GetListCategoryRequest struct {
 
 type GetListCategoryResponse struct {
 	Count      int64       `json:"count"`
-	Categories []*UpdateCategory `json:"categories"`
+	Categories []*Category1 `json:"categories"`
 }

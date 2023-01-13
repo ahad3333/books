@@ -48,7 +48,7 @@ type GetListBookRequest struct {
 
 type GetListBookResponse struct {
 	Count int64   `json:"count"`
-	Books []*UpdateBook `json:"books"`
+	Books []*CategoryBook `json:"books"`
 }
 
 type Empty struct{}

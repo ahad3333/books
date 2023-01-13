@@ -202,18 +202,32 @@ func (r *categoryRepo)GetList(ctx context.Context, req *models.GetListCategoryRe
 	if err != nil {
 		return &models.GetListCategoryResponse{}, err
 	}
-
+	var (
+		id        sql.NullString
+		name      sql.NullString
+		price       sql.NullFloat64
+		description sql.NullString
+		createdAt sql.NullString
+		updatedAt sql.NullString
+	)
 
 	for rows.Next() {
-	var category models.UpdateCategory
-
 		err = rows.Scan(
-			&resp.Count,
-			&category.Id,
-			&category.Name,
+			&id,
+			&name,
+			&price,
+			&description,
+			&createdAt,
+			&updatedAt,
 		)
 		if err != nil {
 			return &models.GetListCategoryResponse{}, err
+		}
+		category := models.Category1{
+			Id:          id.String,
+			Name:        name.String,
+			CreatedAt:   createdAt.String,
+			UpdatedAt:   updatedAt.String,
 		}
 		resp.Categories = append(resp.Categories, &category)
 
