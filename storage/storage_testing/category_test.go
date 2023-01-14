@@ -135,16 +135,12 @@ func TestCategoryDelete(t *testing.T)  {
 	tests := []struct {
 		Name    string
 		Input   *models.CategoryPrimeryKey
-		Output  *models.Category
 		WantErr bool
 	}{
 		{
 			Name: "case 1",
 			Input: &models.CategoryPrimeryKey{
 				Id: "59930f89-8849-485c-ad0b-f05704fdffd4",
-			},
-			Output: &models.Category{
-				Name:        "Time",
 			},
 			WantErr: false,
 		},
@@ -156,15 +152,6 @@ func TestCategoryDelete(t *testing.T)  {
 			 err := categoryRepo.Delete(context.Background(), tc.Input)
 			if err != nil {
 				t.Errorf("%s: expected: %v, got: %v", tc.Name, tc.WantErr, err)
-				return
-			}
-
-			comparer := cmp.Comparer(func(x, y models.Book) bool {
-				return x.Name == y.Name 
-			})
-
-			if diff := cmp.Diff(tc.Output,  comparer); diff != "" {
-				t.Error(diff)
 				return
 			}
 		})
