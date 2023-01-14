@@ -19,3 +19,4 @@ CREATE TABLE book_category (
     category_id UUID references category(id), 
     books_id UUID references books(id)
 );
+

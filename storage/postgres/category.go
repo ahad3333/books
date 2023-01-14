@@ -10,18 +10,18 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/lib/pq"
 )
-type categoryRepo struct {
+type CategoryRepo struct {
 	db *pgxpool.Pool
 }
 
-func NewCategoryRepo(db *pgxpool.Pool) *categoryRepo {
-	return &categoryRepo{
+func NewCategoryRepo(db *pgxpool.Pool) *CategoryRepo {
+	return &CategoryRepo{
 		db: db,
 	}
 
 }
 
-func (r *categoryRepo) Insert(ctx context.Context, req *models.CreateCategory) (string, error) {
+func (r *CategoryRepo) Insert(ctx context.Context, req *models.CreateCategory) (string, error) {
 	var (
 		id = uuid.New().String()
 	)
@@ -67,7 +67,7 @@ func (r *categoryRepo) Insert(ctx context.Context, req *models.CreateCategory) (
 	return id, nil
 }
 
-func (r *categoryRepo) GetByID(ctx context.Context, req *models.CategoryPrimeryKey) (*models.Category, error) {
+func (r *CategoryRepo) GetByID(ctx context.Context, req *models.CategoryPrimeryKey) (*models.Category, error) {
 	query := `
 	SELECT
 		c.id,
@@ -172,7 +172,7 @@ return category, nil
 }
 
 
-func (r *categoryRepo)GetList(ctx context.Context, req *models.GetListCategoryRequest) (*models.GetListCategoryResponse, error) {
+func (r *CategoryRepo)GetList(ctx context.Context, req *models.GetListCategoryRequest) (*models.GetListCategoryResponse, error) {
 
 	var (
 		resp   models.GetListCategoryResponse
@@ -237,7 +237,7 @@ func (r *categoryRepo)GetList(ctx context.Context, req *models.GetListCategoryRe
 	return &resp, nil
 }
 
-func (r *categoryRepo)Update(ctx context.Context, Category *models.UpdateCategory) error {
+func (r *CategoryRepo)Update(ctx context.Context, Category *models.UpdateCategory) error {
 
 	query := `
 		UPDATE 
@@ -259,7 +259,7 @@ func (r *categoryRepo)Update(ctx context.Context, Category *models.UpdateCategor
 	return nil
 }
 
-func (r *categoryRepo)Delete(ctx context.Context, req *models.CategoryPrimeryKey) error {
+func (r *CategoryRepo)Delete(ctx context.Context, req *models.CategoryPrimeryKey) error {
 	_, err := r.db.Exec(ctx,"DELETE FROM book_category WHERE category_id  = $1 ", req.Id)
 	if err != nil {
 		return err

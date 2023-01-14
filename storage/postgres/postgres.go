@@ -12,8 +12,8 @@ import (
 
 type Store struct {
 	db       *pgxpool.Pool
-	book     *bookRepo
-	category *categoryRepo
+	book     *BookRepo
+	category *CategoryRepo
 }
 
 func NewPostgres(ctx context.Context, cfg config.Config) (storage.StorageI, error) {
