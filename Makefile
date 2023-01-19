@@ -13,3 +13,7 @@ test_Id:
 test_Insert:
 	go test -run TestBookInsert -v  
 
+migrate:
+	migrate create -ext sql -dir ./migrations/postgres -seq -digits 2 create_tables
+
+

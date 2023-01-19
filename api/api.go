@@ -15,11 +15,11 @@ func NewApi(r *gin.Engine, storage storage.StorageI) {
 
 	handlerV1 := handler.NewHandler(storage)
 
-	r.POST("/book", handlerV1.CreateBook)
-	r.GET("/book/:id", handlerV1.GetByIDBook)
-	r.GET("/book", handlerV1.GetListBook)
-	r.PUT("/book/:id", handlerV1.UpdateBook)
-	r.DELETE("/book/:id", handlerV1.DeleteBook)
+	r.POST("/product", handlerV1.CreateBook)
+	r.GET("/product/:id", handlerV1.GetByIDBook)
+	r.GET("/product", handlerV1.GetListBook)
+	r.PUT("/product/:id", handlerV1.UpdateBook)
+	r.DELETE("/product/:id", handlerV1.DeleteBook)
 
 	r.POST("/category", handlerV1.CreateCategory)
 	r.GET("/category/:id", handlerV1.GetByIdCategory)

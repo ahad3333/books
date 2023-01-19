@@ -195,6 +195,7 @@ func (r *BookRepo)GetList(ctx context.Context, req *models.GetListBookRequest) (
 			created_at,
 			updated_at 
 		FROM books
+	
 	`
 
 	if req.Offset > 0 {
@@ -278,11 +279,21 @@ func (r *BookRepo)Update(ctx context.Context, book *models.UpdateBook) error {
 }
 
 func (r *BookRepo)Delete(ctx context.Context, req *models.BookPrimeryKey) error {
-	_, err := r.db.Exec(ctx,"DELETE FROM book_category WHERE books_id  = $1 ", req.Id)
+	var(
+		count int
+	)
+	 err:= r.db.QueryRow(ctx, "select count(*) from book_category books_id = $1 ",req.Id).Scan(&count)
 	if err != nil {
 		return err
 	}
-	_, err = r.db.Exec(ctx,"DELETE FROM books WHERE id = $1", req.Id)
+	if count>0 {
+		_, err = r.db.Exec(ctx,"DELETE FROM book_category WHERE books_id  = $1 ", req.Id)
+	if err != nil {
+		return err
+	}
+	}
+	
+	_, err = r.db.Exec(ctx, "DELETE FROM books WHERE id = $1", req.Id)
 
 	if err != nil {
 		return err
